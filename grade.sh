@@ -21,10 +21,12 @@ rm student-submission/ListExamplesTester.java 2> /dev/null > /dev/null
 cp ListExamplesTester.java student-submission/ListExamplesTester.java 2> /dev/null > /dev/null
 
 javac -cp $CPATH student-submission/ListExamplesTester.java student-submission/ListExamples.java 2> stderr.txt > stdout.txt
+
+STAT=$?
 STDOUT=`cat stdout.txt`
 STDERR=`cat stderr.txt`
 
-if [[ $? -ne 0 ]]
+if [[ $STAT -ne 0 ]]
 then
   echo "A compile error occured"
   echo "Standard output: $STDOUT"
@@ -32,15 +34,17 @@ then
   exit
 fi
 
-mv student-submission/*.class .
+mv student-submission/*.class . 2> /dev/null > /dev/null
 
 java -cp $CPATH org.junit.runner.JUnitCore ListExamplesTester 2> stderr.txt > stdout.txt
+
+STAT=$?
 STDOUT=`cat stdout.txt`
 STDERR=`cat stderr.txt`
 
-rm *.class
+rm *.class 2> /dev/null > /dev/null
 
-if [[ $? -ne 0 ]]
+if [[ $STAT -ne 0 ]]
 then
   echo "A runtime error occured"
   echo "Standard output: $STDOUT"
