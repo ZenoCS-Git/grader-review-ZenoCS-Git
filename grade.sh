@@ -44,16 +44,7 @@ STDERR=`cat stderr.txt`
 
 rm *.class 2> /dev/null > /dev/null
 
-if [[ $STAT -ne 0 ]]
-then
-  echo "A runtime error occured"
-  echo "Standard output: $STDOUT"
-  echo "Standard error: $STDERR"
-  exit
-fi
-
-TESTOK=`cat stdout.txt | grep "OK" -o`
-if [[ "OK" == $TESTOK ]]
+if [[ $STAT -eq 0 ]]
 then
   TESTSPASSED=`cat stdout.txt | grep "OK" | grep -E "[0-9]*" -o`
   TESTSRUN=$TESTSPASSED
